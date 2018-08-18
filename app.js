@@ -18,9 +18,10 @@ var campgroundRoutes = require("./routes/campgrounds");
 var commentRoutes = require("./routes/comments");
 var indexRoutes = require("./routes/index");
 
-mongoose.connect("mongodb://localhost:27017/yelp_camp_v6");
+// mongoose.connect("mongodb://localhost:27017/yelp_camp_v6");
+mongoose.connect("mongodb://coolerneo:sasizo8@ds125482.mlab.com:25482/pirmastest");
 app.use(bodyParser.urlencoded({extended: true}));
-    app.set("view engine", "ejs");
+app.set("view engine", "ejs");
 //servinam public director kad naudotu visus joje esancius failus siuo atveju - CSS
 app.use(express.static(__dirname + "/public"));     
 app.use(methodOverride("_method"));
