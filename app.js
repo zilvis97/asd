@@ -18,10 +18,10 @@ var campgroundRoutes = require("./routes/campgrounds");
 var commentRoutes = require("./routes/comments");
 var indexRoutes = require("./routes/index");
 
-console.log(process.env.DATABASEURL);
+var url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp_v6";
 
-mongoose.connect(process.env.DATABASEURL);
-// mongoose.connect("mongodb://coolerneo:sasizo8@ds125482.mlab.com:25482/pirmastest");
+mongoose.connect(url);
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 //servinam public director kad naudotu visus joje esancius failus siuo atveju - CSS
