@@ -25,7 +25,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
         id: req.user._id,
         username: req.user.username
     };
-    var newCampground = {name: name, price:price, image: url, description: desc, author: author};   
+    var newCampground = {name: name, price: price, image: url, description: desc, author: author};   
     //Create a new campgoround and savo it to DB
     Campground.create(newCampground, function(err, newlyCreated) {
         if(err) {
@@ -49,7 +49,6 @@ router.get("/:id", function(req, res) {
             console.log(err);
         }   
         else {
-            //console.log(foundCampground);
             res.render("campgrounds/show", {campground: foundCampground});
         }   
     }); 

@@ -2,20 +2,30 @@ var express = require("express");
 var router = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
-
-    
+var Campground = require("../models/campground");
+        
 // Root route
 router.get("/", function(req, res) {
     res.render("landing");  
 });
 
 // Register form
-router.get("/register", function(req, res) {
+router.get("/register", function(req, res) {    
     res.render("register"); 
 });
 
 router.post("/register", function(req, res) {
-    var newUser = new User({username: req.body.username});
+    var newUser = new User(
+        {
+            username: req.body.username,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            avatar: req.body.avatar
+        });
+    if(req.body.adminCode === "admincode123") {
+        newUser.isAdmin = true;
+    }
     User.register(newUser, req.body.password, function(err, user) {
         if(err) {
             req.flash("error", err.message);
@@ -28,7 +38,7 @@ router.post("/register", function(req, res) {
     });
 }); 
             
-// Login form 
+// Login form   
 router.get("/login", function(req, res) {
     res.render("login"); 
 });
@@ -43,7 +53,26 @@ router.post("/login", passport.authenticate("local",
 router.get("/logout", function(req, res) {
     req.logout();
     req.flash("success", "Logged you out!");
-    res.redirect("/campgrounds");
+    res.redirect("back");
 }); 
 
-module.exports = router;
+//user profile
+router.get("/users/:id", function(req, res) {
+    User.findById(req.params.id, function(err, foundUser) {
+        if(err) {
+            req.flash("error", "User does not exist");
+            res.redirect("/campgrounds");
+        } 
+        else {
+            Campground.find().where("author.id").equals(foundUser._id).exec(function(err, campgrounds) {
+                if(err) {
+                    req.flash("error", "User does not exist");
+                    res.redirect("/campgrounds");
+                }
+                res.render("users/show", {user: foundUser, campgrounds: campgrounds});
+            });
+        }
+    });
+});
+
+module.exports = router;        

@@ -28,7 +28,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));     
 app.use(methodOverride("_method"));
 app.use(flash());
-// seedDB();
+app.locals.moment = require("moment");
 
 //PASSPORT CONFIG   
 app.use(require("express-session")({
@@ -48,9 +48,9 @@ app.use(function(req, res, next) {
     res.locals.error = req.flash("error");  
     res.locals.success = req.flash("success");
     next(); 
-});     
+});         
             
-app.use(indexRoutes);
+app.use(indexRoutes);   
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/campgrounds", campgroundRoutes);
 

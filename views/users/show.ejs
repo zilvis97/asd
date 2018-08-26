@@ -1,0 +1,28 @@
+<% include ../partials/header %>
+
+<div class="row">
+    <div class="col-md-4" style="overflow-wrap: break-word;">
+        <h1><%= user.firstName + " " + user.lastName %></h1>
+        <div class="thumbnail">
+            <img src="<%= user.avatar %>" alt="user profile img">  
+            <div class="caption"><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
+        </div>
+        name: 'hrh',
+        price: '0.01',
+        image: 'https://www.nps.gov/maca/planyourvisit/images/MapleSpringsCampground-Campsite.jpg?maxwidth=1200&maxheight=1200&autorotate=false',
+        description: 'G.O.A.T || G.O.A.T || G.O.A.T || G.O.A.T || G.O.A.T || G.O.A.T || G.O.A.T || G.O.A.T || G.O.A.T || G.O.A.T || G.O.A.T || ',
+    </div>
+    <div class="col-md-8">
+        <h3><%= user.username %>'s campgrounds</h3>
+        <ul>
+        <% campgrounds.forEach(function(campground) { %>
+            <div class="thumbnail">
+                <img src="<%= campground.image %>">
+                <div class="caption"><a href="/campgrounds/<%= campground.id %>"><%= campground.name %></a></div>
+            </div>
+        <% }); %>
+        </ul>   
+    </div>
+</div>
+
+<% include ../partials/footer %>                                
